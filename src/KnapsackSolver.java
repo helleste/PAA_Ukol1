@@ -1,4 +1,9 @@
 
 public class KnapsackSolver {
- // TODO
+
+	public static void main(String[] args) {
+		FileLoader loader = new FileLoader();
+		loader.loadFile();
+
+	}
 }

@@ -11,7 +11,7 @@ import junit.framework.Test;
 
 public class FileLoader {
 
-	private String filename = "src/Files/inst/knap_4.inst.dat";
+	private String filename = "src/Files/inst/knap_10.inst.dat";
 	
 	
 //	public String getURL() {
@@ -25,9 +25,22 @@ public class FileLoader {
 		
 		String[] lineData = strLine.split(" ");
 		int instId = Integer.parseInt(lineData[0]);
-		// TODO Finish this
+		int instSize = Integer.parseInt(lineData[1]);
+		Knapsack instKnapsack = new Knapsack();
+		instKnapsack.setLimit(Integer.parseInt(lineData[2]));
+		ItemPool instItemPool = new ItemPool(instSize);
+		int itemId = 0;
 		
-		System.out.println(Arrays.toString(lineData));
+		for (int i = 3; i < lineData.length; i+=2) {
+			Item instItem = new Item(itemId, 
+					Integer.parseInt(lineData[i]), 
+					Integer.parseInt(lineData[i+1]));
+			instItemPool.addToPool(instItem, itemId);
+			itemId++;
+		}
+		
+		Instance instance = new Instance(instId, instSize, instItemPool);
+		System.out.println(instance.toString());
 	}
 	
 	public void loadFile() {

@@ -5,6 +5,12 @@ public class Item {
 	private int weight;
 	private int price;
 	
+	public Item(int id, int weight, int price) {
+		this.id = id;
+		this.weight = weight;
+		this.price = price;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -32,6 +38,6 @@ public class Item {
 	@Override
 	public String toString() {
 		
-		return "Item #" + this.id + "\nWeight: " + this.weight + "\nPrice: " + this.price;
+		return "Item #" + this.id + "\n--Weight: " + this.weight + "\n--Price: " + this.price;
 	}
 }

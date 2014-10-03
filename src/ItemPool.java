@@ -2,6 +2,10 @@
 public class ItemPool {
 	
 	private Item[] items;
+	
+	public ItemPool(int size) {
+		this.items = new Item[size];
+	}
 
 	public Item[] getItems() {
 		return items;
@@ -11,15 +15,18 @@ public class ItemPool {
 		this.items = items;
 	}
 	
+	public void addToPool (Item item, int index) {
+		this.items[index] = item;
+	}
+	
 	@Override
 	public String toString() {
-		String itemsData = "[\n";
+		String itemsData = "";
 		
 		for (Item item : items) {
 			itemsData += item.toString();
+			itemsData += "\n";
 		}
-		
-		itemsData += "\n]";
 		
 		return itemsData;
 	}

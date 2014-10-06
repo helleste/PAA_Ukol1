@@ -27,39 +27,33 @@ public class KnapsackSolver {
 		// IF METHOD = BRUTE
 		for (Instance instance : instList) {
 			bruteForceSolver(instance);
-			System.out.println(instance.getId() + ": " + Long.toString(instance.getKnapsack().getItemsInBag().toLongArray()[0], 2));
+			System.out.println(instance.getId() + ": " + instance.getKnapsack().getPrice());
 		}
-		
-		/*int n = 1;
-		BitSet bs = BitSet.valueOf(new long[]{n});
-		System.out.println(bs.nextSetBit(0));
-		System.out.println(bs.nextSetBit(1));
-		long l = bs.toLongArray()[0];
-		System.out.println(l);*/
 
 	}
 	
+	// Solves the problem using brute force
 	private static void bruteForceSolver(Instance instance) {
 		int index, curWeight, bestPrice = 0, curPrice;
 		
+		// Taking every number from the interval (1,2^n) and try its binary form
 		for (int i = 1; i < Math.pow(2, instance.getnSize()); i++) {
 			BitSet bs = BitSet.valueOf(new long[]{i});
 			curWeight = 0;
 			curPrice = 0;
 			index = -1;
-
+			
+			// Try to add every item with its bit set to 1
 			while ((index = bs.nextSetBit(index + 1)) != -1) {
-				System.out.println("index: " + index + ", i: " + i);
 				curWeight += instance.getItemPool().getItems()[index].getWeight();
 				curPrice += instance.getItemPool().getItems()[index].getPrice();
-				System.out.println("curWeight: " + curWeight);
 				
 				if (curWeight > instance.getKnapsack().getLimit())
 					break;
 			}
 			
 			// Weight is under limit. Is price higher then current best?
-			if (curPrice > bestPrice) {
+			if (curPrice > bestPrice && curWeight <= instance.getKnapsack().getLimit()) {
 				instance.getKnapsack().setItemsInBag(bs);
 				instance.getKnapsack().setPrice(curPrice);
 				instance.getKnapsack().setWeight(curWeight);
@@ -68,6 +62,7 @@ public class KnapsackSolver {
 		}
 	}
 	
+	// Solves the problem using weight/price ratio
 	private static void ratioSolver(Instance instance) {
 		Arrays.sort(instance.getItemPool().getItems(), new RatioComparator());
 		
@@ -87,9 +82,9 @@ public class KnapsackSolver {
 				
 			}
 		}
-		System.out.println(Long.toString(instance.getKnapsack().getItemsInBag().toLongArray()[0], 2));
 	}
 	
+	// If we add nWeight to current knapsack weight it will still be under limit?
 	public static boolean isUnderLimit(Instance instance, int nWeight) {
 		if ((instance.getKnapsack().getWeight() + 
 				nWeight) <= instance.getKnapsack().getLimit())

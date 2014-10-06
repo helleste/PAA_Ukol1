@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FileLoader {
 
-	private String filename = "src/Files/inst/knap_4.inst.dat";
+	private String filename = "src/Files/inst/knap_10.inst.dat";
 	
 	private Instance parseLine(String strLine) {
 		

@@ -3,25 +3,15 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Arrays;
-
-import junit.framework.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FileLoader {
 
-	private String filename = "src/Files/inst/knap_10.inst.dat";
+	private String filename = "src/Files/inst/knap_4.inst.dat";
 	
-	
-//	public String getURL() {
-//		URL url = Test.class.getClassLoader().getResource(filename);
-//	    System.out.println(url.toString());
-//	    
-//	    return(url.getPath());
-//	}
-	
-	private void parseLine(String strLine) {
+	private Instance parseLine(String strLine) {
 		
 		String[] lineData = strLine.split(" ");
 		int instId = Integer.parseInt(lineData[0]);
@@ -39,11 +29,11 @@ public class FileLoader {
 			itemId++;
 		}
 		
-		Instance instance = new Instance(instId, instSize, instItemPool);
-		System.out.println(instance.toString());
+		Instance instance = new Instance(instId, instSize, instItemPool, instKnapsack);
+		return instance;
 	}
 	
-	public void loadFile() {
+	public List<Instance> loadFile() {
 		
 		try {
 			FileInputStream fstream = new FileInputStream(filename);
@@ -51,18 +41,24 @@ public class FileLoader {
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			
 			String strLine;
+			List<Instance> instList = new ArrayList<Instance>();
 			
 			// Read till you reach EOF
 			while ((strLine = br.readLine()) != null) {
-				parseLine(strLine);
+				instList.add(parseLine(strLine));
 			}
 			
 			// Close the input stream
 			in.close();
 			
+			// Return list of instances
+			return instList;
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			return null;
 		}
 	}
 }

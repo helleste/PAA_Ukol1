@@ -1,11 +1,21 @@
+import java.util.BitSet;
+
 
 public class Knapsack {
 	
 	private int limit;
 	private int weight;
 	private int price;
-	//BitSet itemsInBag;
+	private BitSet itemsInBag = new BitSet();
 	
+	public BitSet getItemsInBag() {
+		return itemsInBag;
+	}
+
+	public void setItemsInBag(BitSet itemsInBag) {
+		this.itemsInBag = itemsInBag;
+	}
+
 	public int getLimit() {
 		return limit;
 	}

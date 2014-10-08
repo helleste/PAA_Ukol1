@@ -9,8 +9,9 @@ import java.util.List;
 
 public class FileLoader {
 
-	private String filename = "src/Files/inst/knap_10.inst.dat";
+	private String filename = "src/Files/inst/knap_25.inst.dat";
 	
+	// Parse a line of the given file and create Instance from the data
 	private Instance parseLine(String strLine) {
 		
 		String[] lineData = strLine.split(" ");
@@ -33,6 +34,7 @@ public class FileLoader {
 		return instance;
 	}
 	
+	// Parse the file and return array of instances
 	public List<Instance> loadFile() {
 		
 		try {

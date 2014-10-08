@@ -3,6 +3,8 @@ import java.util.BitSet;
 import java.util.Comparator;
 import java.util.List;
 
+import timemeasure.CPUTiming;
+
 class RatioComparator implements Comparator<Item> {
 	
 	@Override
@@ -18,18 +20,29 @@ public class KnapsackSolver {
 	public static void main(String[] args) {
 		FileLoader loader = new FileLoader();
 		List<Instance> instList = loader.loadFile();
-		
-		// IF METHOD = RATIO
-		/*for (Instance instance : instList) {
-			ratioSolver(instance);
-		}*/
-		
-		// IF METHOD = BRUTE
-		for (Instance instance : instList) {
-			bruteForceSolver(instance);
-			System.out.println(instance.getId() + ": " + instance.getKnapsack().getPrice());
-		}
+		float totalRelativeError = 0, maxRelativeError = 0, relativeError;
+		int optPrice, appPrice;
 
+		//long startTime = CPUTiming.getCpuTime();
+		for (Instance instance : instList) {
+			
+			bruteForceSolver(instance);
+			optPrice = instance.getKnapsack().getPrice();
+			ratioSolver(instance);
+			appPrice = instance.getKnapsack().getPrice();
+			relativeError = relativeError(optPrice, appPrice);
+			totalRelativeError += relativeError;
+			
+			// Is current relative error greater than current max relative error?
+			if (relativeError > maxRelativeError) {
+				maxRelativeError = relativeError;
+			}
+			
+		}
+		//long cpuTime = CPUTiming.getCpuTime() - startTime;
+		//System.out.println((float)cpuTime/(float) 50);
+		System.out.println("total :"  + totalRelativeError/50);
+		System.out.println("max: " + maxRelativeError);
 	}
 	
 	// Solves the problem using brute force
@@ -91,5 +104,10 @@ public class KnapsackSolver {
 			return true;
 		
 		return false;
+	}
+	
+	// Compute the relative error
+	private static float relativeError(int optPrice, int appPrice) {
+		return Math.abs(((float)optPrice - (float)appPrice))/Math.abs((float)optPrice);
 	}
 }

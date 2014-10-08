@@ -1,4 +1,5 @@
 
+// Represents a single item
 public class Item {
 	
 	private int id;

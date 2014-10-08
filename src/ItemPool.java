@@ -1,4 +1,5 @@
 
+// Represents a pool of items to be evaluated
 public class ItemPool {
 	
 	private Item[] items;

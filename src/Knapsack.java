@@ -1,6 +1,6 @@
 import java.util.BitSet;
 
-
+// Represent a knapsack
 public class Knapsack {
 	
 	private int limit;

@@ -40,5 +40,10 @@ public class Knapsack {
 		this.price = price;
 	}
 	
+	public void reset() {
+		this.price = 0;
+		this.weight = 0;
+	}
+	
 	// TODO toString()
 }

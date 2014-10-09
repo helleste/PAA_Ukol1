@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -9,7 +10,13 @@ class RatioComparator implements Comparator<Item> {
 	
 	@Override
 	public int compare(Item i1, Item i2) {
-		return (i2.getPrice()/i2.getWeight()) - (i1.getPrice()/i1.getWeight());
+		if ((float) i1.getPrice()/i1.getWeight() > (float) i2.getPrice()/i2.getWeight()) {
+			return -1;
+		}
+		if ((float) i1.getPrice()/i1.getWeight() < (float) i2.getPrice()/i2.getWeight()) {
+			return 1;
+		}
+		return 0;
 	}
 	
 }
@@ -25,9 +32,9 @@ public class KnapsackSolver {
 
 		//long startTime = CPUTiming.getCpuTime();
 		for (Instance instance : instList) {
-			
 			bruteForceSolver(instance);
 			optPrice = instance.getKnapsack().getPrice();
+			instance.getKnapsack().reset();
 			ratioSolver(instance);
 			appPrice = instance.getKnapsack().getPrice();
 			relativeError = relativeError(optPrice, appPrice);
